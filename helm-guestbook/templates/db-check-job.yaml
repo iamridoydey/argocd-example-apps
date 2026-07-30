@@ -4,6 +4,7 @@ metadata:
   name: read-db-config-job
   annotations:
     argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
 spec:
   backoffLimit: 2
   template:
