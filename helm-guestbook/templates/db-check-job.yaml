@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: read-db-config-job
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      containers:
+        - name: db-config-job
+          image: busybox
+          command: ["sh", "-c", "echo 'Reading db config....' && cat /etc/config/host && sleep 10"]
+          volumeMounts:
+            - name: db-config
+              mountPath: /etc/config
+      volumes:
+        - name: db-config
+          configMap:
+            name: db-config
+      restartPolicy: Never
